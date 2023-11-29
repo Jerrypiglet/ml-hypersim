@@ -56,6 +56,7 @@ def process_scene(s, args):
     asset_export_dir = os.path.abspath(os.path.join(scene_dir, "_asset_export"))
 
     in_file = os.path.abspath(os.path.join(asset_export_dir, in_scene_fileroot + ".obj"))
+    assert os.path.exists(in_file), 'File not found: %s' % in_file
     out_dir = os.path.abspath(os.path.join(detail_dir, "mesh"))
 
     current_source_file_path = path_utils.get_current_source_file_path(frame=inspect.currentframe())

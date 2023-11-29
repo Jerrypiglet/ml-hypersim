@@ -1,4 +1,4 @@
-#
+    #
 # For licensing see accompanying LICENSE.txt file.
 # Copyright (C) 2020 Apple Inc. All Rights Reserved.
 #
@@ -63,8 +63,6 @@ if args.dataset_dir_to_copy is not None:
 path_utils.add_path_to_sys_path(args.dataset_dir, mode="relative_to_cwd", frame=inspect.currentframe())
 import _dataset_config
 
-
-
 dataset_scenes_dir = os.path.join(args.dataset_dir, "scenes")
 
 if args.scene_names is not None:
@@ -104,7 +102,7 @@ for s in scenes:
 
         cmd = _system_config.decompress_bin + \
             " x " + '"' + in_file + '"' \
-            " -o" + '"' + scene_asset_dir + '"'
+            " -o " + '"' + scene_asset_dir + '"'
         print("")
         print(cmd)
         print("")

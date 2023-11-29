@@ -15,31 +15,42 @@ To complete this tutorial example, we execute the following command-line tools. 
 _You must substitute your own `replace_old_path`, `replace_new_path`, and `dataset_dir_when_rendering` when executing these tools, and they must be absolute paths._
 
 ```
+(hypersim-py38) ruizhu@rui4090:~/Documents/Projects/ml-hypersim/examples/01_marketplace_dataset$ 
+
 # pre-processing
 
 # unpack scene data
+
 python ../../code/python/tools/dataset_initialize_scenes.py --dataset_dir . --downloads_dir downloads
 
 # export scene data from native asset file into vrscene file (not provided)
 
-# replace the Windows path in our exported scene with a valid macOS path, so we can execute the rest of the tutorial example on macOS
+[SKIP] # replace the Windows path in our exported scene with a valid macOS path, so we can execute the rest of the tutorial example on macOS
 python ../../code/python/tools/modify_vrscene_replace_paths.py --in_file scenes/ai_001_001/_asset_export/scene.vrscene --out_file scenes/ai_001_001/_asset_export/scene.vrscene --replace_old_path C:\\Users\\mike_roberts2\\code\\github\\ml-hypersim\\examples\\01_marketplace_dataset --replace_new_path /Users/mike/code/github/ml-hypersim/examples/01_marketplace_dataset
 
-# correct bad default export options
+[SKIP] # correct bad default export options
 python ../../code/python/tools/dataset_modify_vrscenes_normalize.py --dataset_dir . --platform_when_rendering mac --dataset_dir_when_rendering /Users/mike/code/github/ml-hypersim/examples/01_marketplace_dataset
 
-# render intermediate image
+[SKIP] # render intermediate image
 python ../../code/python/tools/dataset_render_scene.py --dataset_dir . --scene_name ai_001_001 --render_pass none --save_image
 
 # generate a fast binary triangle mesh representation
 python ../../code/python/tools/dataset_generate_meshes.py --dataset_dir .
 
-# visualize the mesh
+# visualize the mesh ([RUI] should be standing upwards)
 python ../../code/python/tools/visualize_mesh.py --mesh_dir scenes/ai_001_001/_detail/mesh
 ```
 
 ```
 # occupancy map
+
+>>> [INSTEAD] (base) ruizhu@rui4090:~/Documents/Projects/ml-hypersim/examples/01_marketplace_dataset/scenes/ai_001_001/_asset_export$ 
+
+cp -r /media/ruizhu/RUIDATA/Hypersim/ai_001_001/_detail/metadata_cameras.csv metadata_cameras_asset_export.csv
+cp -r /media/ruizhu/RUIDATA/Hypersim/ai_001_001/_detail/cam_00 .
+source ../../third_party/embree-3.13.5.x86_64.linux/embree-vars.sh 
+
+<<<
 
 # generate an occupancy map (must be run on macOS or Linux)
 python ../../code/python/tools/dataset_generate_octomaps.py --dataset_dir .
@@ -59,12 +70,12 @@ python ../../code/python/tools/visualize_camera_trajectory.py --mesh_dir scenes/
 ```
 
 ```
-# modify vrscene to render camera trajectories with appropriate ground truth layers
+[SKIP] # modify vrscene to render camera trajectories with appropriate ground truth layers
 python ../../code/python/tools/dataset_modify_vrscenes_for_hypersim_rendering.py --dataset_dir . --platform_when_rendering mac --dataset_dir_when_rendering /Users/mike/code/github/ml-hypersim/examples/01_marketplace_dataset
 ```
 
 ```
-# rendering
+[SKIP] # rendering
 
 # render geometry pass locally
 python ../../code/python/tools/dataset_render_scene.py --dataset_dir . --scene_name ai_001_001 --camera_name cam_00 --render_pass geometry --save_image

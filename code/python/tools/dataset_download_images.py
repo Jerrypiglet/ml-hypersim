@@ -5,6 +5,7 @@
 
 import argparse
 import os
+from pathlib import Path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--downloads_dir", required=True)
@@ -28,15 +29,24 @@ if args.decompress_dir is not None:
 def download(url):
     download_name = os.path.basename(url)
     download_file = os.path.join(args.downloads_dir, download_name)
-
-    cmd = "curl " + url + " --output " + download_file
-    print("")
-    print(cmd)
-    print("")
-    retval = os.system(cmd)
-    assert retval == 0
+    
+    if not Path(download_file).exists():
+        cmd = "curl " + url + " --output " + download_file
+        print("")
+        print(cmd)
+        print("")
+        retval = os.system(cmd)
+        assert retval == 0
+    else:
+        print('Skipping download of "' + download_name + '" because it already exists.')
 
     if args.decompress_dir is not None:
+        decompress_to_dir = os.path.join(args.decompress_dir, os.path.splitext(download_name)[0])
+        if Path(download_file).exists():
+            import shutil
+            shutil.rmtree(decompress_to_dir, ignore_errors=True)
+            print('unzip folder deleted:', decompress_to_dir)
+
         cmd = "unzip " + download_file + " -d " + args.decompress_dir
         print("")
         print(cmd)

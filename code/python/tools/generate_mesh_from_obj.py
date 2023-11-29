@@ -48,10 +48,12 @@ if not os.path.exists(args.out_dir): os.makedirs(args.out_dir)
 # load vertices and faces
 obj_data = obj_file_utils.load_obj_file(args.in_file)
 
-
-
 # save vertices and faces
-with h5py.File(mesh_vertices_hdf5_file,  "w") as f: f.create_dataset("dataset", data=obj_data.vertices)
+vertices = obj_data.vertices
+T_c2w_b2mi = np.array([[1., 0., 0.], [0., 0., 1.], [0., -1., 0.]], dtype=np.float64)
+vertices = (T_c2w_b2mi.T @ (vertices.T)).T
+
+with h5py.File(mesh_vertices_hdf5_file,  "w") as f: f.create_dataset("dataset", data=vertices)
 with h5py.File(mesh_texcoords_hdf5_file, "w") as f: f.create_dataset("dataset", data=obj_data.texcoords)
 with h5py.File(mesh_normals_hdf5_file,   "w") as f: f.create_dataset("dataset", data=obj_data.normals)
 with h5py.File(mesh_faces_oi_hdf5_file,  "w") as f: f.create_dataset("dataset", data=obj_data.faces_oi)

@@ -36,7 +36,7 @@ if not args.use_single_threaded_reference_implementation:
     if args.n_jobs is not None:
         n_jobs = args.n_jobs
     else:
-        n_jobs = 4 # 4 parallel jobs by default; more processes don't seem to offer much speed-up
+        n_jobs = 16 # 4 parallel jobs by default; more processes don't seem to offer much speed-up
 
 in_scene_fileroot  = "scene"
 dataset_scenes_dir = os.path.join(args.dataset_dir, "scenes")

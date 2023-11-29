@@ -54,14 +54,12 @@ if not os.path.exists(out_dir): os.makedirs(out_dir)
 with h5py.File(mesh_vertices_hdf5_file, "r") as f: mesh_vertices = f["dataset"][:]
 with h5py.File(mesh_faces_vi_hdf5_file, "r") as f: mesh_faces_vi = f["dataset"][:]
 
-
-
 scene                 = [ s for s in _dataset_config.scenes if s["name"] == scene_name ][0]
 df_scene              = pd.read_csv(metadata_scene_csv_file, index_col="parameter_name")
 meters_per_asset_unit = df_scene.loc["meters_per_asset_unit"][0]
-asset_units_per_meter = 1.0 / meters_per_asset_unit
 
-
+# asset_units_per_meter = 1.0 / meters_per_asset_unit
+asset_units_per_meter = 1.0  # [RUI]
 
 # parameters for space carving algorithm
 
@@ -87,29 +85,48 @@ df_cameras_asset_export = pd.read_csv(metadata_cameras_asset_export_csv_file)
 
 start_camera_positions = None
 
+print('+++', df_cameras_asset_export.to_records())
 for c in df_cameras_asset_export.to_records():
-
     camera_name = c["camera_name"]
 
     camera_dir                             = os.path.join(asset_export_dir, camera_name)
     camera_keyframe_positions_hdf5_file    = os.path.join(camera_dir, "camera_keyframe_positions.hdf5")
-    camera_keyframe_orientations_hdf5_file = os.path.join(camera_dir, "camera_keyframe_orientations.hdf5")
+    # camera_keyframe_orientations_hdf5_file = os.path.join(camera_dir, "camera_keyframe_orientations.hdf5")
 
     with h5py.File(camera_keyframe_positions_hdf5_file,    "r") as f: camera_keyframe_positions    = f["dataset"][:]
-    with h5py.File(camera_keyframe_orientations_hdf5_file, "r") as f: camera_keyframe_orientations = f["dataset"][:]
+    # with h5py.File(camera_keyframe_orientations_hdf5_file, "r") as f: camera_keyframe_orientations = f["dataset"][:]
+    
+    
 
     if start_camera_positions is None:
         start_camera_positions = camera_keyframe_positions
     else:
         start_camera_positions = r_[ start_camera_positions, camera_keyframe_positions ]
+        
 
 start_camera_positions = pd.DataFrame(data=start_camera_positions).drop_duplicates().to_numpy()
 
 assert start_camera_positions.shape[0] > 0
 
+# [RUI] debug >>>
+start_camera_positions = start_camera_positions * df_scene.loc["meters_per_asset_unit"][0] # [RUI] added this line
+# T_c2w_b2mi = np.array([[1., 0., 0.], [0., 0., 1.], [0., -1., 0.]], dtype=np.float32)
+# start_camera_positions = (T_c2w_b2mi @ (start_camera_positions.T)).T
+# start_camera_positions = start_camera_positions[:5]
+
+# colors = np.ones((start_camera_positions.shape[0],3), dtype=np.float32)
+# d = {'x': start_camera_positions[:,0],'y': start_camera_positions[:,1],'z': start_camera_positions[:,2], 
+#              'red' : colors[:,0], 'green' : colors[:,1], 'blue' : colors[:,2]}
+# from pyntcloud import PyntCloud
+# cloud = PyntCloud(pd.DataFrame(data=d))
+# cloud.to_file("scenes/output_cameras.obj")
+# with h5py.File(camera_keyframe_positions_hdf5_file, "w") as f: f.create_dataset("dataset", data=start_camera_positions)
+# <<<
+
 min_start_camera_positions    = np.min(start_camera_positions, axis=0)
 max_start_camera_positions    = np.max(start_camera_positions, axis=0)
 start_camera_positions_extent = max_start_camera_positions - min_start_camera_positions
+
 
 print("[HYPERSIM: SCENE_GENERATE_OCTOMAP] Extent of all cameras: " + str(start_camera_positions_extent))
 print("[HYPERSIM: SCENE_GENERATE_OCTOMAP] Octomap extent: " + str(n_octomap_size))
@@ -140,6 +157,5 @@ free_space_min, free_space_max = \
 with h5py.File(octomap_free_space_min_hdf5_file, "w") as f: f.create_dataset("dataset", data=free_space_min)
 with h5py.File(octomap_free_space_max_hdf5_file, "w") as f: f.create_dataset("dataset", data=free_space_max)
 
-
-
 print("[HYPERSIM: SCENE_GENERATE_OCTOMAP] Finished.")
+print('free_space_max', free_space_max, 'free_space_min', free_space_min)

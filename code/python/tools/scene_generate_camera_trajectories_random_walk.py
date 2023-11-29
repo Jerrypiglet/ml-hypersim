@@ -67,7 +67,10 @@ np.random.shuffle(color_vals_unique)
 
 df_scene              = pd.read_csv(metadata_scene_csv_file, index_col="parameter_name")
 meters_per_asset_unit = df_scene.loc["meters_per_asset_unit"][0]
-asset_units_per_meter = 1.0 / meters_per_asset_unit
+
+# asset_units_per_meter = 1.0 / meters_per_asset_unit
+asset_units_per_meter = 1.0  # [RUI]
+
 
 
 
@@ -78,7 +81,7 @@ n_width_pixels  = 256
 n_height_pixels = 192
 n_fov_x         = pi/3
 
-n_samples_random_walk            = 100  # each final generated camera trajectory consists of this many views
+n_samples_random_walk            = 20  # each final generated camera trajectory consists of this many views
 n_samples_octomap_query          = 1000 # generate this many preliminary candidates from a local neighborhood, test if they're in free space
 n_samples_camera_pose_candidates = 20   # generate this many candidates from free space, compute view scores
 
@@ -139,14 +142,16 @@ df_cameras_asset_export = pd.read_csv(metadata_cameras_asset_export_csv_file)
 df_cameras = pd.DataFrame(columns=["camera_name"])
 i = 0
 
+print('+++', df_cameras_asset_export.to_records())
 for c in df_cameras_asset_export.to_records():
 
     in_camera_name                            = c["camera_name"]
     in_camera_dir                             = os.path.join(asset_export_dir, in_camera_name)
     in_camera_keyframe_positions_hdf5_file    = os.path.join(in_camera_dir, "camera_keyframe_positions.hdf5")
     in_camera_keyframe_orientations_hdf5_file = os.path.join(in_camera_dir, "camera_keyframe_orientations.hdf5")
-
-    assert len(in_camera_name.lstrip("cam_")) != 2 or not in_camera_name.lstrip("cam_").isdigit()
+    
+    # print('+++', in_camera_name.lstrip("cam_")) # [RUI] commented out the following line
+    # assert len(in_camera_name.lstrip("cam_")) != 2 or not in_camera_name.lstrip("cam_").isdigit()
 
     out_camera_name                                 = "cam_%02d" % i
     out_camera_dir                                  = os.path.join(args.scene_dir, "_detail", out_camera_name)
@@ -162,6 +167,19 @@ for c in df_cameras_asset_export.to_records():
 
     with h5py.File(in_camera_keyframe_positions_hdf5_file,    "r") as f: in_camera_keyframe_positions    = f["dataset"][:]
     with h5py.File(in_camera_keyframe_orientations_hdf5_file, "r") as f: in_camera_keyframe_orientations = f["dataset"][:]
+    
+    # [RUI] debug >>>
+    in_camera_keyframe_positions = in_camera_keyframe_positions * df_scene.loc["meters_per_asset_unit"][0] # [RUI] added this line
+    # T_c2w_b2mi = np.array([[1., 0., 0.], [0., 0., 1.], [0., -1., 0.]], dtype=np.float32)
+    # T_c2w_b2mi_2 = np.array([[1., 0., 0.], [0., -1., 0.], [0., 0., -1.]], dtype=np.float32)
+
+    # # in_camera_keyframe_orientations # each row is a dir vector
+    # in_camera_keyframe_positions = (T_c2w_b2mi @ (in_camera_keyframe_positions.T)).T
+    # in_camera_keyframe_orientations = (T_c2w_b2mi.reshape((1, 3, 3)) @ in_camera_keyframe_orientations.transpose((0, 2, 1)) @ T_c2w_b2mi_2.reshape((1, 3, 3))).transpose((0, 2, 1))
+
+    # in_camera_keyframe_positions = in_camera_keyframe_positions[:5]
+    
+    # <<<
 
     print("[HYPERSIM: SCENE_GENERATE_CAMERA_TRAJECTORIES_RANDOM_WALK] Input camera " + in_camera_name + ", output camera " + out_camera_name + "...")
 

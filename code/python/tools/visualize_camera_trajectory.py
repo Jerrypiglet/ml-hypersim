@@ -46,7 +46,7 @@ if args.cameras_scale_factor is not None:
     cameras_scale_factor = args.cameras_scale_factor
 else:
     cameras_scale_factor = 50.0
-
+    
 mesh_vertices_hdf5_file = os.path.join(args.mesh_dir, "mesh_vertices.hdf5")
 mesh_faces_vi_hdf5_file = os.path.join(args.mesh_dir, "mesh_faces_vi.hdf5")
 
@@ -69,12 +69,12 @@ else:
 
 
 
-mayavi_utils.points3d_color_by_scalar(camera_keyframe_positions, scalars=camera_keyframe_frame_indices, scale_factor=2.0, colormap="summer")
-mayavi.mlab.plot3d(camera_keyframe_positions[:,0], camera_keyframe_positions[:,1], camera_keyframe_positions[:,2], camera_keyframe_frame_indices, tube_radius=0.5, opacity=0.5, colormap="summer")
+mayavi_utils.points3d_color_by_scalar(camera_keyframe_positions, scalars=camera_keyframe_frame_indices, scale_factor=2.0*cameras_scale_factor, colormap="summer")
+mayavi.mlab.plot3d(camera_keyframe_positions[:,0], camera_keyframe_positions[:,1], camera_keyframe_positions[:,2], camera_keyframe_frame_indices, tube_radius=0.5*cameras_scale_factor, opacity=0.5, colormap="summer")
 
 if camera_keyframe_look_at_positions is not None:
-    mayavi_utils.points3d_color_by_scalar(camera_keyframe_look_at_positions, scalars=camera_keyframe_frame_indices, scale_factor=2.0, colormap="winter")
-    mayavi.mlab.plot3d(camera_keyframe_look_at_positions[:,0], camera_keyframe_look_at_positions[:,1], camera_keyframe_look_at_positions[:,2], camera_keyframe_frame_indices, tube_radius=0.5, opacity=0.5, colormap="winter")
+    mayavi_utils.points3d_color_by_scalar(camera_keyframe_look_at_positions, scalars=camera_keyframe_frame_indices, scale_factor=2.0*cameras_scale_factor, colormap="winter")
+    mayavi.mlab.plot3d(camera_keyframe_look_at_positions[:,0], camera_keyframe_look_at_positions[:,1], camera_keyframe_look_at_positions[:,2], camera_keyframe_frame_indices, tube_radius=0.5*cameras_scale_factor, opacity=0.5, colormap="winter")
 
 c_face = (0.75,0.75,0.75)
 
