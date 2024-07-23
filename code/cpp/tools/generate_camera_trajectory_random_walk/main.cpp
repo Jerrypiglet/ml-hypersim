@@ -122,6 +122,8 @@ int main (int argc, const char** argv) {
     n_query_half_extent_relative_to_start.load(n_query_half_extent_relative_to_start_file, arma::hdf5_binary_trans);
     n_query_half_extent_relative_to_current.load(n_query_half_extent_relative_to_current_file, arma::hdf5_binary_trans);
 
+    std::cout << mesh_vertices.n_rows << mesh_vertices.n_cols << std::endl;
+
     octomap::OcTree octree_octomap(octomap_file);
 
     assert(mesh_vertices.n_cols == 3);
@@ -221,7 +223,6 @@ int main (int argc, const char** argv) {
     //
     // arrays to hold preview images across the random walk, so we only have to save them in a single HDF5 file
     //
-
     arma::mat  intersection_distances = arma::ones<arma::mat>(n_samples_random_walk, V_cam.n_cols) * std::numeric_limits<float>::infinity();
     arma::imat prim_ids               = arma::ones<arma::imat>(n_samples_random_walk, V_cam.n_cols) * -1;
 
@@ -232,7 +233,6 @@ int main (int argc, const char** argv) {
     //
 
     arma::vec start_camera_look_from_position = start_camera_position;
-
 
 
     //
@@ -306,7 +306,6 @@ int main (int argc, const char** argv) {
     } else {
         octomap_sample = -2;
     }
-
 
 
     arma::vec start_camera_look_at_position;
@@ -440,7 +439,12 @@ int main (int argc, const char** argv) {
             assert(arma::all(t_max > t_min)); // assert all rays intersect bounding box
             assert(arma::all(t_min < 0.5*1.75*n_voxel_size)); // assert all rays start from inside bounding box (with a bit of slack because bounding box min and max might be off by a half voxel)
 
-            indices = arma::find_nonfinite(intersection_distances_current);
+            indices = arma::find_nonfinite( 
+                        with open(evermotion_meta_json_path, "r") as f:
+            self.evermotion_meta = json.load(f)
+        self.scene_tuple_key_list = self.evermotion_meta.keys()
+
+            );
             t_max.elem(indices) = arma::ones<arma::vec>(indices.n_rows)*std::numeric_limits<float>::infinity();
 
             // slack of 1.75*n_voxel_size guarantees that we're not in the same voxel as the intersection point

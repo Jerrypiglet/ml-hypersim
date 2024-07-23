@@ -12,7 +12,7 @@ default:
 	-I$(ICON_FONT_CPP_HEADERS_INCLUDE_DIR) \
 	-I$(LIBIGL_INCLUDE_DIR) \
 	-I$(LIBIGL_EXTERNAL_DIR) \
-	-I$(LIBIGL_EXTERNAL_DIR)/eigen \
+	-I/usr/include/eigen3 \
 	-I$(LIBIGL_EXTERNAL_DIR)/glad/include \
 	-I$(LIBIGL_EXTERNAL_DIR)/glfw/include \
 	-I$(LIBIGL_EXTERNAL_DIR)/imgui/examples \

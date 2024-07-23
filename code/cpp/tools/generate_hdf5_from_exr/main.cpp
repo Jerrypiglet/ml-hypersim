@@ -12,11 +12,11 @@
 
 #include <armadillo>
 
-#include <OpenEXR/half.h>
+#include <Imath/half.h>
 #include <OpenEXR/IexBaseExc.h>
-#include <OpenEXR/ImathBox.h>
-#include <OpenEXR/ImathMatrix.h>
-#include <OpenEXR/ImathVec.h>
+#include <Imath/ImathBox.h>
+#include <Imath/ImathMatrix.h>
+#include <Imath/ImathVec.h>
 #include <OpenEXR/ImfArray.h>
 #include <OpenEXR/ImfAttribute.h>
 #include <OpenEXR/ImfChannelList.h>

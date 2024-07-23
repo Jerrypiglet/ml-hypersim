@@ -1,0 +1,36 @@
+APPROX_MVBB_INCLUDE_DIR:=/datalightnet/ml-hypersim/third_party/ApproxMVBB/build/install/include
+APPROX_MVBB_LIB_DIR:=/datalightnet/ml-hypersim/third_party/ApproxMVBB/build/install/lib
+APPROX_MVBB_EXTRA_CPP_FLAGS:=-Wl,-rpath /datalightnet/ml-hypersim/third_party/ApproxMVBB/build/install/lib
+
+ARGS_INCLUDE_DIR:=/datalightnet/ml-hypersim/third_party/args
+
+ARMADILLO_INCLUDE_DIR:=/usr/local/include
+ARMADILLO_LIB_DIR:=/usr/lib/x86_64-linux-gnu
+ARMADILLO_EXTRA_CPP_FLAGS:=-DARMA_USE_HDF5
+
+EMBREE_INCLUDE_DIR:=/datalightnet/ml-hypersim/third_party/embree-3.13.5.x86_64.linux/include
+EMBREE_LIB_DIR:=/datalightnet/ml-hypersim/third_party/embree-3.13.5.x86_64.linux/lib
+
+# required when building the Hypersim Scene Annotation Tool
+FONT_AWESOME_DIR:=/datalightnet/ml-hypersim/third_party/Font-Awesome
+
+HDF5_INCLUDE_DIR:=/usr/lib/x86_64-linux-gnu/hdf5/serial/include
+HDF5_LIB_DIR:=/usr/lib/x86_64-linux-gnu/hdf5/serial/lib
+
+# required when building the Hypersim Scene Annotation Tool
+ICON_FONT_CPP_HEADERS_INCLUDE_DIR:=/datalightnet/ml-hypersim/third_party/IconFontCppHeaders
+
+# required when building the Hypersim Scene Annotation Tool
+LIBIGL_INCLUDE_DIR:=/datalightnet/ml-hypersim/third_party/libigl/include
+LIBIGL_EXTERNAL_DIR:=/datalightnet/ml-hypersim/third_party/libigl/external
+LIBIGL_LIB_DIR:=/datalightnet/ml-hypersim/third_party/libigl/BUILD
+
+OCTOMAP_INCLUDE_DIR:=/usr/local/include
+OCTOMAP_LIB_DIR:=/usr/local/lib
+OCTOMAP_EXTRA_CPP_FLAGS:=-Wl,-rpath /usr/local/lib
+
+OPENEXR_INCLUDE_DIR:=/usr/local/include
+OPENEXR_LIB_DIR:=/usr/local/lib
+
+EIGEN_INCLUDE_DIR:=/usr/local/include
+EIGEN_LIB_DIR:=/usr/local/lib
