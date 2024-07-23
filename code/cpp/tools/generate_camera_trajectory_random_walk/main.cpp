@@ -439,12 +439,7 @@ int main (int argc, const char** argv) {
             assert(arma::all(t_max > t_min)); // assert all rays intersect bounding box
             assert(arma::all(t_min < 0.5*1.75*n_voxel_size)); // assert all rays start from inside bounding box (with a bit of slack because bounding box min and max might be off by a half voxel)
 
-            indices = arma::find_nonfinite( 
-                        with open(evermotion_meta_json_path, "r") as f:
-            self.evermotion_meta = json.load(f)
-        self.scene_tuple_key_list = self.evermotion_meta.keys()
-
-            );
+            indices = arma::find_nonfinite(intersection_distances_current);
             t_max.elem(indices) = arma::ones<arma::vec>(indices.n_rows)*std::numeric_limits<float>::infinity();
 
             // slack of 1.75*n_voxel_size guarantees that we're not in the same voxel as the intersection point
