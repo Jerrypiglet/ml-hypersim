@@ -1,4 +1,3 @@
-g++ main.cpp \
 APPROX_MVBB_INCLUDE_DIR:=/usr/local/include
 APPROX_MVBB_LIB_DIR:=/usr/local/lib
 APPROX_MVBB_EXTRA_CPP_FLAGS:=-Wl,-rpath /usr/local/lib
