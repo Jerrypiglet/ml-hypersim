@@ -8,22 +8,22 @@ ARMADILLO_INCLUDE_DIR:=/usr/local/include
 ARMADILLO_LIB_DIR:=/usr/lib/x86_64-linux-gnu
 ARMADILLO_EXTRA_CPP_FLAGS:=-DARMA_USE_HDF5
 
-EMBREE_INCLUDE_DIR:=/packages/embree-3.13.5.x86_64.linux/include
-EMBREE_LIB_DIR:=/packages/embree-3.13.5.x86_64.linux/lib
+EMBREE_INCLUDE_DIR:=/tmp/embree-3.13.5.x86_64.linux/include
+EMBREE_LIB_DIR:=/tmp/embree-3.13.5.x86_64.linux/lib
 
 # required when building the Hypersim Scene Annotation Tool
-FONT_AWESOME_DIR:=/packages/Font-Awesome
+FONT_AWESOME_DIR:=/tmp/Font-Awesome
 
 HDF5_INCLUDE_DIR:=/usr/lib/x86_64-linux-gnu/hdf5/serial/include
 HDF5_LIB_DIR:=/usr/lib/x86_64-linux-gnu/hdf5/serial/lib
 
 # required when building the Hypersim Scene Annotation Tool
-ICON_FONT_CPP_HEADERS_INCLUDE_DIR:=/packages/IconFontCppHeaders
+ICON_FONT_CPP_HEADERS_INCLUDE_DIR:=/tmp/IconFontCppHeaders
 
 # required when building the Hypersim Scene Annotation Tool
-LIBIGL_INCLUDE_DIR:=/packages/libigl/include
-LIBIGL_EXTERNAL_DIR:=/packages/libigl/external
-LIBIGL_LIB_DIR:=/packages/libigl/BUILD
+LIBIGL_INCLUDE_DIR:=/tmp/libigl/include
+LIBIGL_EXTERNAL_DIR:=/tmp/libigl/external
+LIBIGL_LIB_DIR:=/tmp/libigl/BUILD
 
 OCTOMAP_INCLUDE_DIR:=/usr/local/include
 OCTOMAP_LIB_DIR:=/usr/local/lib
